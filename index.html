@@ -146,26 +146,7 @@
   .q-section { margin-bottom: 1.5rem; }
   .q-section:last-child { margin-bottom: 0; }
 
-  /* DRAG */
-  .drag-list { display: flex; flex-direction: column; gap: 7px; }
-  .drag-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 11px 14px;
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    background: var(--bg-secondary);
-    font-size: 14px;
-    cursor: grab;
-    color: var(--text);
-    transition: border-color .2s, box-shadow .2s;
-  }
-  .drag-item:active { cursor: grabbing; }
-  .drag-item i { color: var(--text-secondary); font-size: 16px; }
-  .drag-item .num { font-size: 12px; font-weight: 600; color: var(--green); min-width: 20px; }
-  .drag-item.dragging { opacity: .3; }
-  .drag-item.over { border-color: var(--green); box-shadow: 0 0 0 2px rgba(45,106,45,.15); }
+  
 
   /* NAV */
   .nav-row { display: flex; justify-content: space-between; align-items: center; margin-top: 1.75rem; gap: 12px; }
@@ -206,6 +187,37 @@
   .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--border); transition: background .3s, width .3s; }
   .dot.done { background: var(--green); }
   .dot.active { width: 18px; border-radius: 3px; background: var(--green); }
+
+  /* TOP 3 */
+  #top3List { display: flex; flex-direction: column; gap: 8px; }
+  .top3-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 14px;
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius);
+    background: var(--bg-secondary);
+    transition: border-color .2s;
+  }
+  .top3-item.has-pick { border-color: var(--green); background: var(--green-light); }
+  .top3-badges { display: flex; gap: 6px; flex-shrink: 0; }
+  .badge-btn {
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    border: 1.5px solid var(--border);
+    background: var(--bg);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all .15s;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .badge-btn:hover { border-color: var(--green); color: var(--green); }
+  .badge-btn.active { background: var(--green); border-color: var(--green); color: #fff; }
+  .badge-btn.taken { opacity: .35; cursor: default; pointer-events: none; }
+  .top3-label { font-size: 14px; color: var(--text); }
 
   /* SUCCESS */
   .success-block { text-align: center; padding: 3rem 1rem; background: var(--bg); border-radius: var(--radius-lg); border: 1px solid var(--border-light); }
@@ -455,14 +467,51 @@
 
     <div class="card">
       <div class="q-section">
-        <div class="qlabel">8. Classifique as principais dores em ordem de importância <span style="color:var(--text-secondary);font-weight:400;font-size:13px">(arraste para ordenar)</span> <span class="req">*</span></div>
-        <div class="drag-list" id="dragList">
-          <div class="drag-item" draggable="true" data-value="Clima"><i class="ti ti-grip-vertical"></i><span class="num">1</span> Clima</div>
-          <div class="drag-item" draggable="true" data-value="Mão de obra"><i class="ti ti-grip-vertical"></i><span class="num">2</span> Mão de obra</div>
-          <div class="drag-item" draggable="true" data-value="Produtividade"><i class="ti ti-grip-vertical"></i><span class="num">3</span> Produtividade</div>
-          <div class="drag-item" draggable="true" data-value="Insumos elevados"><i class="ti ti-grip-vertical"></i><span class="num">4</span> Insumos elevados</div>
-          <div class="drag-item" draggable="true" data-value="Acesso a crédito ou fluxo de caixa"><i class="ti ti-grip-vertical"></i><span class="num">5</span> Acesso a crédito ou fluxo de caixa</div>
+        <div class="qlabel">8. Escolha as <strong>3 principais dores</strong> da sua lavoura em ordem de importância <span class="req">*</span></div>
+        <p style="font-size:13px;color:var(--text-secondary);margin-bottom:12px">Clique em 1º, 2º e 3º nos itens mais importantes para você.</p>
+        <div id="top3List">
+          <div class="top3-item" data-value="Clima">
+            <div class="top3-badges">
+              <button type="button" class="badge-btn" data-pos="1">1º</button>
+              <button type="button" class="badge-btn" data-pos="2">2º</button>
+              <button type="button" class="badge-btn" data-pos="3">3º</button>
+            </div>
+            <span class="top3-label">Clima</span>
+          </div>
+          <div class="top3-item" data-value="Mão de obra">
+            <div class="top3-badges">
+              <button type="button" class="badge-btn" data-pos="1">1º</button>
+              <button type="button" class="badge-btn" data-pos="2">2º</button>
+              <button type="button" class="badge-btn" data-pos="3">3º</button>
+            </div>
+            <span class="top3-label">Mão de obra</span>
+          </div>
+          <div class="top3-item" data-value="Produtividade">
+            <div class="top3-badges">
+              <button type="button" class="badge-btn" data-pos="1">1º</button>
+              <button type="button" class="badge-btn" data-pos="2">2º</button>
+              <button type="button" class="badge-btn" data-pos="3">3º</button>
+            </div>
+            <span class="top3-label">Produtividade</span>
+          </div>
+          <div class="top3-item" data-value="Insumos elevados">
+            <div class="top3-badges">
+              <button type="button" class="badge-btn" data-pos="1">1º</button>
+              <button type="button" class="badge-btn" data-pos="2">2º</button>
+              <button type="button" class="badge-btn" data-pos="3">3º</button>
+            </div>
+            <span class="top3-label">Insumos elevados</span>
+          </div>
+          <div class="top3-item" data-value="Acesso a crédito ou fluxo de caixa">
+            <div class="top3-badges">
+              <button type="button" class="badge-btn" data-pos="1">1º</button>
+              <button type="button" class="badge-btn" data-pos="2">2º</button>
+              <button type="button" class="badge-btn" data-pos="3">3º</button>
+            </div>
+            <span class="top3-label">Acesso a crédito ou fluxo de caixa</span>
+          </div>
         </div>
+        <div class="err-msg" id="err-top3">Selecione 1º, 2º e 3º lugar.</div>
       </div>
 
       <div class="field" style="margin-top:1.25rem">
@@ -494,200 +543,121 @@
 </div><!-- /container -->
 
 <script>
-// =============================================
-//  ⚙️  CONFIGURAÇÃO — cole aqui a URL do seu
-//  Google Apps Script após publicar como Web App
-// =============================================
 const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx9mfwNVrGTfa7JuJqKAqUeuf4kwjuxxgfFc5cmRe3GJ98tFQtO3zo_4bKIVZlNZIO3/exec';
-// =============================================
-
 const TOTAL = 5;
 
-function dots(idx) {
-  for (let b = 0; b < TOTAL; b++) {
-    const el = document.getElementById('dots-' + b);
-    if (!el) continue;
-    el.innerHTML = '';
-    for (let i = 0; i < TOTAL; i++) {
-      const d = document.createElement('div');
-      d.className = 'dot' + (i < idx ? ' done' : '') + (i === idx ? ' active' : '');
-      el.appendChild(d);
-    }
-  }
-}
+function dots(idx){for(var b=0;b<TOTAL;b++){var el=document.getElementById('dots-'+b);if(!el)continue;el.innerHTML='';for(var i=0;i<TOTAL;i++){var d=document.createElement('div');d.className='dot'+(i<idx?' done':'')+(i===idx?' active':'');el.appendChild(d);}}}
+function prog(idx){var p=Math.round(idx/TOTAL*100);document.getElementById('progressFill').style.width=p+'%';document.getElementById('stepPct').textContent=p+'%';document.getElementById('stepLabel').textContent=idx<TOTAL?'Etapa '+(idx+1)+' de '+TOTAL:'Concluido';dots(idx);}
+function show(idx){document.querySelectorAll('.block').forEach(function(b){b.classList.remove('active');});var b=document.getElementById('block-'+idx);if(b)b.classList.add('active');if(idx>=TOTAL)document.getElementById('progressWrap').style.display='none';prog(idx);window.scrollTo({top:0,behavior:'smooth'});}
 
-function prog(idx) {
-  const p = Math.round(idx / TOTAL * 100);
-  document.getElementById('progressFill').style.width = p + '%';
-  document.getElementById('stepPct').textContent = p + '%';
-  document.getElementById('stepLabel').textContent = idx < TOTAL ? 'Etapa ' + (idx + 1) + ' de ' + TOTAL : 'Concluído';
-  dots(idx);
-}
-
-function show(idx) {
-  document.querySelectorAll('.block').forEach(b => b.classList.remove('active'));
-  const b = document.getElementById('block-' + idx);
-  if (b) b.classList.add('active');
-  if (idx >= TOTAL) document.getElementById('progressWrap').style.display = 'none';
-  prog(idx);
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-
-
-function vb0() {
-  let ok = 1;
-  const t = (id, s) => { document.getElementById(id).classList.toggle('v', s); if (s) ok = 0; };
-  var telRaw = document.getElementById('f-tel').value.replace(/[^0-9]/g, '');
-  const emailVal = document.getElementById('f-email').value.trim();
-  t('err-nome',   !document.getElementById('f-nome').value.trim());
-  t('err-cidade', !document.getElementById('f-cidade').value.trim());
-  // Telefone obrigatório: mínimo 10 dígitos (DDD + 8) ou 11 (DDD + 9)
-  t('err-tel', telRaw.length < 10);
-  // E-mail opcional — só valida o formato se estiver preenchido
-  t('err-email', emailVal.length > 0 && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal));
+function vb0(){
+  var ok=1;
+  function t(id,s){document.getElementById(id).classList.toggle('v',s);if(s)ok=0;}
+  var telRaw=document.getElementById('f-tel').value.replace(/[^0-9]/g,'');
+  var emailVal=document.getElementById('f-email').value.trim();
+  t('err-nome',!document.getElementById('f-nome').value.trim());
+  t('err-cidade',!document.getElementById('f-cidade').value.trim());
+  t('err-tel',telRaw.length<10);
+  t('err-email',emailVal.length>0&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal));
   return ok;
 }
 
-function vr(n, e) {
-  const c = document.querySelector('input[name="' + n + '"]:checked');
-  document.getElementById(e).classList.toggle('v', !c);
-  return !!c;
+function vr(n,e){var c=document.querySelector('input[name="'+n+'"]:checked');document.getElementById(e).classList.toggle('v',!c);return !!c;}
+
+function goNext(i){
+  if(i===0&&!vb0())return;
+  if(i===1&&!(vr('q1','err-q1')&vr('q2','err-q2')))return;
+  if(i===2&&!(vr('q3','err-q3')&vr('q4','err-q4')))return;
+  if(i===3&&!(vr('q5','err-q5')&vr('q6','err-q6')&vr('q7','err-q7')))return;
+  if(i===4&&!window.validateTop3())return;
+  show(i+1);
 }
+function goBack(i){show(i-1);}
 
-function goNext(i) {
-  if (i === 0 && !vb0()) return;
-  if (i === 1 && !(vr('q1','err-q1') & vr('q2','err-q2'))) return;
-  if (i === 2 && !(vr('q3','err-q3') & vr('q4','err-q4'))) return;
-  if (i === 3 && !(vr('q5','err-q5') & vr('q6','err-q6') & vr('q7','err-q7'))) return;
-  show(i + 1);
-}
+function getRadio(name){var el=document.querySelector('input[name="'+name+'"]:checked');return el?el.value:'';}
 
-function goBack(i) { show(i - 1); }
+function showToast(msg){var t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(function(){t.classList.remove('show');},4000);}
 
-function getDragOrder() {
-  return Array.from(document.querySelectorAll('#dragList .drag-item'))
-    .map((el, i) => (i + 1) + '. ' + el.dataset.value)
-    .join(' | ');
-}
-
-function getRadio(name) {
-  const el = document.querySelector('input[name="' + name + '"]:checked');
-  return el ? el.value : '';
-}
-
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 4000);
-}
-
-async function submitForm() {
-  const btn = document.getElementById('btnEnviar');
-  btn.disabled = true;
+async function submitForm(){
+  var btn=document.getElementById('btnEnviar');
+  btn.disabled=true;
   document.getElementById('loadingOverlay').classList.add('show');
-
-  const data = {
-    timestamp:    new Date().toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' }),
-    nome:         document.getElementById('f-nome').value.trim(),
-    cidade:       document.getElementById('f-cidade').value.trim(),
-    estado:       document.getElementById('f-estado').value.trim(),
-    telefone:     document.getElementById('f-tel').value.trim(),
-    email:        document.getElementById('f-email').value.trim(),
-    uso_ciclus:   getRadio('q1'),
-    como_conheceu:getRadio('q2'),
-    beneficio:    getRadio('q3'),
-    resultados:   getRadio('q4'),
-    suporte:      getRadio('q5'),
-    frequencia:   getRadio('q6'),
-    ampliar:      getRadio('q7'),
-    dores_ordem:  getDragOrder(),
-    vendedor:     document.getElementById('f-vendedor').value.trim(),
-    comentarios:  document.getElementById('f-obs').value.trim()
+  var data={
+    timestamp: new Date().toLocaleString('pt-BR',{timeZone:'America/Sao_Paulo'}),
+    nome: document.getElementById('f-nome').value.trim(),
+    cidade: document.getElementById('f-cidade').value.trim(),
+    estado: document.getElementById('f-estado').value.trim(),
+    telefone: document.getElementById('f-tel').value.trim(),
+    email: document.getElementById('f-email').value.trim(),
+    uso_ciclus: getRadio('q1'),
+    como_conheceu: getRadio('q2'),
+    beneficio: getRadio('q3'),
+    resultados: getRadio('q4'),
+    suporte: getRadio('q5'),
+    frequencia: getRadio('q6'),
+    ampliar: getRadio('q7'),
+    dores_ordem: window.getTop3(),
+    vendedor: document.getElementById('f-vendedor').value.trim(),
+    comentarios: document.getElementById('f-obs').value.trim()
   };
-
-  try {
-    await fetch(APPS_SCRIPT_URL, {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data)
-    });
+  try{
+    await fetch(APPS_SCRIPT_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});
     document.getElementById('loadingOverlay').classList.remove('show');
     show(5);
-  } catch (err) {
+  }catch(err){
     document.getElementById('loadingOverlay').classList.remove('show');
-    btn.disabled = false;
-    showToast('Erro ao enviar. Verifique sua conexão e tente novamente.');
+    btn.disabled=false;
+    showToast('Erro ao enviar. Verifique sua conexao e tente novamente.');
   }
 }
 
-// Drag & Drop
-const list = document.getElementById('dragList');
-let dragged = null;
-list.addEventListener('dragstart', e => {
-  dragged = e.target.closest('.drag-item');
-  setTimeout(() => dragged && dragged.classList.add('dragging'), 0);
-});
-list.addEventListener('dragend', () => {
-  dragged && dragged.classList.remove('dragging');
-  list.querySelectorAll('.drag-item').forEach(el => el.classList.remove('over'));
-  list.querySelectorAll('.drag-item').forEach((el, i) => { el.querySelector('.num').textContent = i + 1; });
-  dragged = null;
-});
-list.addEventListener('dragover', e => {
-  e.preventDefault();
-  const t = e.target.closest('.drag-item');
-  if (t && t !== dragged) {
-    list.querySelectorAll('.drag-item').forEach(el => el.classList.remove('over'));
-    t.classList.add('over');
-    const r = t.getBoundingClientRect();
-    if (e.clientY < r.top + r.height / 2) list.insertBefore(dragged, t);
-    else list.insertBefore(dragged, t.nextSibling);
+(function(){
+  var picks={1:null,2:null,3:null};
+  function renderAll(){
+    document.querySelectorAll('.top3-item').forEach(function(item){
+      item.querySelectorAll('.badge-btn').forEach(function(btn){
+        var pos=parseInt(btn.dataset.pos);
+        btn.classList.toggle('active',picks[pos]===item);
+        btn.classList.toggle('taken',picks[pos]!==null&&picks[pos]!==item);
+      });
+      item.classList.toggle('has-pick',[1,2,3].some(function(p){return picks[p]===item;}));
+    });
   }
-});
+  document.querySelectorAll('.badge-btn').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var item=btn.closest('.top3-item');
+      var pos=parseInt(btn.dataset.pos);
+      if(picks[pos]===item){picks[pos]=null;}
+      else{[1,2,3].forEach(function(p){if(picks[p]===item)picks[p]=null;});picks[pos]=item;}
+      renderAll();
+    });
+  });
+  window.getTop3=function(){var r=[];[1,2,3].forEach(function(p){if(picks[p])r.push(p+'o '+picks[p].dataset.value);});return r.join(' | ');};
+  window.validateTop3=function(){var f=[1,2,3].every(function(p){return picks[p]!==null;});document.getElementById('err-top3').classList.toggle('v',!f);return f;};
+})();
 
-// Radio highlight
-document.querySelectorAll('.ropt').forEach(o => {
-  o.addEventListener('click', () => {
-    const n = o.querySelector('input[type=radio]').name;
-    document.querySelectorAll('input[name="' + n + '"]').forEach(r => r.closest('.ropt').classList.remove('sel'));
+(function(){
+  var el=document.getElementById('f-tel');
+  if(!el)return;
+  el.addEventListener('input',function(){
+    var v=this.value.replace(/[^0-9]/g,'').slice(0,11);
+    if(v.length===0){this.value='';return;}
+    var out='('+v.substring(0,2);
+    if(v.length>2)out+=') '+v.substring(2,7);
+    if(v.length>7)out+='-'+v.substring(7,11);
+    this.value=out;
+  });
+})();
+
+document.querySelectorAll('.ropt').forEach(function(o){
+  o.addEventListener('click',function(){
+    var n=o.querySelector('input[type=radio]').name;
+    document.querySelectorAll('input[name="'+n+'"]').forEach(function(r){r.closest('.ropt').classList.remove('sel');});
     o.classList.add('sel');
   });
 });
 
-// Máscara automática do telefone
-  const telInput = document.getElementById('f-tel');
-  telInput.addEventListener('input', function() {
-    const pos = this.selectionStart;
-    const raw = this.value.replace(/\D/g,'').length;
-    this.value = formatTel(this.value);
-    // mantém cursor em posição razoável
-  });
-  telInput.addEventListener('keydown', function(e) {
-    // permite backspace limpar normalmente
-  });
-
-
-
-
-  // ── Máscara de Telefone ──────────────────────────────
-  (function() {
-    var el = document.getElementById('f-tel');
-    if (!el) return;
-    el.addEventListener('input', function() {
-      var v = this.value.replace(/[^0-9]/g, '').slice(0, 11);
-      var out = '';
-      if (v.length === 0) { this.value = ''; return; }
-      out += '(' + v.substring(0, 2);
-      if (v.length > 2) out += ') ' + v.substring(2, 7);
-      if (v.length > 7) out += '-' + v.substring(7, 11);
-      this.value = out;
-    });
-  })();
-
-  prog(0);
+prog(0);
 </script>
 </body>
 </html>
